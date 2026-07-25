@@ -1,0 +1,60 @@
+<section class="edit-shell">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Sensor Configuration</p>
+      <h1>Edit Sensor Reading</h1>
+      @if (reading) {
+        <p>Adjust the recorded values for sensor reading {{ reading.id }}.</p>
+      }
+    </div>
+    <!-- <a routerLink="/sensor-reading" class="button secondary">Back to Readings</a> -->
+  </div>
+
+  @if (isLoading) {
+    <div class="status-card"><p>Loading Sensor Reading...</p></div>
+  } @else if (!reading) {
+    <div class="status-card error-card"><p>{{ errorMessage }}</p></div>
+  } @else {
+    <form class="edit-card" [formGroup]="editForm" (ngSubmit)="save()">
+      <div class="readonly-details">
+        <div><span>Reading ID</span><strong>{{ reading.id }}</strong></div>
+        <div><span>Posted At</span><strong>{{ postedAt | date:'medium' }}</strong></div>
+      </div>
+
+      <div class="form-grid">
+        <label>
+          <span>Temperature</span>
+          <input type="number" step="any" formControlName="temperature" />
+          @if (editForm.controls.temperature.touched && editForm.controls.temperature.invalid) {
+            <small>Temperature is required.</small>
+          }
+        </label>
+        <label>
+          <span>Humidity</span>
+          <input type="number" step="any" formControlName="humidity" />
+          @if (editForm.controls.humidity.touched && editForm.controls.humidity.invalid) {
+            <small>Humidity is required.</small>
+          }
+        </label>
+        <label>
+          <span>Light</span>
+          <input type="number" step="1" formControlName="light" />
+        </label>
+        <label>
+          <span>Pass Value</span>
+          <input type="number" step="any" formControlName="passValue" />
+        </label>
+      </div>
+
+      @if (errorMessage) { <p class="message error-message">{{ errorMessage }}</p> }
+      @if (successMessage) { <p class="message success-message">{{ successMessage }}</p> }
+
+      <div class="form-actions">
+        <button type="button" class="button secondary" (click)="returnToReadings()">Cancel</button>
+        <button type="submit" class="button primary" [disabled]="editForm.invalid || isSaving">
+          {{ isSaving ? 'Saving...' : 'Save Changes' }}
+        </button>
+      </div>
+    </form>
+  }
+</section>

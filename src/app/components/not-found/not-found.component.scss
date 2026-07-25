@@ -1,0 +1,39 @@
+:host {
+  display: grid;
+  place-items: center;
+  min-height: calc(100vh - 4rem);
+  padding: 2rem 1.5rem;
+}
+
+.card {
+  max-width: 38rem;
+  padding: 2rem;
+  border-radius: 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  text-align: center;
+}
+
+h1 {
+  margin: 0 0 1rem;
+  font-size: 5rem;
+  color: var(--color-text-strong);
+}
+
+p {
+  margin: 0 0 1.5rem;
+  color: var(--color-text-muted);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0 1.25rem;
+  border-radius: 9999px;
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+  text-decoration: none;
+  font-weight: 600;
+}

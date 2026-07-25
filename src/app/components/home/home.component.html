@@ -1,0 +1,33 @@
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">T.J.'s Arduino Communication UI</p>
+    <h1>Monitor Sensor Readings with a Angular UI and Arduino UNO WiFi</h1>
+    <p>View live sensor readings and historical data in a responsive table.</p>
+    <div class="hero-actions">
+      <a routerLink="/latest-sensor-reading" class="button">View Latest Sensor Reading</a>
+      <a routerLink="/sensor-reading" class="button accent">View Sensor Readings</a>
+      <a routerLink="/" class="button secondary">Refresh</a>
+    </div>
+  </div>
+  <div class="hero-panel">
+    <div class="panel-card">
+      <h2>HTTP GET Command Flow</h2>
+      <p>The app retrieves Sensor Readings from a REST endpoint and displays it in a responsive table.</p>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <article>
+    <h2>Live latest reading</h2>
+    <p>A dedicated route highlights the highest Sensor ID and refreshes it every 2 seconds.</p>
+  </article>
+  <article>
+    <h2>Routed Pages</h2>
+    <p>The application uses Angular Router to separate the home page from the sensor reading page.</p>
+  </article>
+  <article>
+    <h2>Standalone Components</h2>
+    <p>Each view is a standalone Angular component with scoped SCSS styling.</p>
+  </article>
+</section>
