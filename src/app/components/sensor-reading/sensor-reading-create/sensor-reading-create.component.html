@@ -1,0 +1,79 @@
+<section class="create-shell">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">WebSocket Sensor Entry</p>
+      <h1>Create Sensor Reading</h1>
+      <p>Send a new reading to the sensor database through the STOMP backend.</p>
+    </div>
+    <a routerLink="/sensor-reading" class="button secondary">View Readings</a>
+  </div>
+
+  <form class="create-card" [formGroup]="createForm" (ngSubmit)="createReading()">
+    <div class="connection-details">
+      <div>
+        <span>WebSocket endpoint</span>
+        <strong>ws://localhost:8080/sensor-reading</strong>
+      </div>
+      <div>
+        <span>STOMP application destination</span>
+        <strong>/app/sensor-reading</strong>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <label>
+        <span>Temperature</span>
+        <input type="number" step="any" formControlName="temperature" placeholder="72.5" />
+        @if (createForm.controls.temperature.touched && createForm.controls.temperature.invalid) {
+          <small>Temperature is required.</small>
+        }
+      </label>
+
+      <label>
+        <span>Humidity</span>
+        <input type="number" step="any" formControlName="humidity" placeholder="45.0" />
+        @if (createForm.controls.humidity.touched && createForm.controls.humidity.invalid) {
+          <small>Humidity is required.</small>
+        }
+      </label>
+
+      <label>
+        <span>Light</span>
+        <input type="number" step="any" formControlName="light" placeholder="850" />
+        @if (createForm.controls.light.touched && createForm.controls.light.invalid) {
+          <small>Light is required.</small>
+        }
+      </label>
+
+      <label>
+        <span>Pass Value</span>
+        <input type="number" step="any" formControlName="passValue" placeholder="1" />
+        @if (createForm.controls.passValue.touched && createForm.controls.passValue.invalid) {
+          <small>Pass value is required.</small>
+        }
+      </label>
+
+      <label class="full-width">
+        <span>Sent At</span>
+        <input type="datetime-local" formControlName="sentAt" />
+        @if (createForm.controls.sentAt.touched && createForm.controls.sentAt.invalid) {
+          <small>Sent time is required.</small>
+        }
+      </label>
+    </div>
+
+    @if (errorMessage) {
+      <p class="message error-message">{{ errorMessage }}</p>
+    }
+    @if (successMessage) {
+      <p class="message success-message">{{ successMessage }}</p>
+    }
+
+    <div class="form-actions">
+      <button type="button" class="button secondary" (click)="returnToReadings()">Cancel</button>
+      <button type="submit" class="button primary" [disabled]="createForm.invalid || isSending">
+        {{ isSending ? 'Sending...' : 'Create Reading' }}
+      </button>
+    </div>
+  </form>
+</section>

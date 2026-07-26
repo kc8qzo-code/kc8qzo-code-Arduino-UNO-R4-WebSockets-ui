@@ -1,0 +1,91 @@
+<section class="sensor-shell">
+  <div class="page-header">
+    <div>
+      <p class="eyebrow">Realtime Sensor Stream</p>
+      <h1>Sensor Readings</h1>
+      <p>Sensor Readings are fetched by an HTTP GET command and displayed in tabular format.</p>
+    </div>
+    <a routerLink="/" class="button secondary">Back to Home</a>
+  </div>
+
+  @if (sensorReadings$ | async; as sensorReadingsPage) {
+    <div class="sensor-table">
+      @if (errorMessage) {
+        <div class="loading-card error-card">
+          <p>{{ errorMessage }}</p>
+        </div>
+      }
+
+      @if (!errorMessage && sensorReadingsPage.items.length === 0) {
+        <div class="loading-card">
+          <p>No Sensor Readings were returned by the API.</p>
+        </div>
+      }
+
+      <table>
+        <thead>
+          <tr>
+            <th>Temperature</th>
+            <th>Humidity</th>
+            <th>Light</th>
+            <th>Pass Value</th>
+            <th>Editing</th>
+          </tr>
+        </thead>
+        @if (sensorReadingsPage.items.length > 0) {
+          <tbody>
+            @for (item of sensorReadingsPage.items; track item.id) {
+              <tr>
+                <td>{{ item.temperature | number:'1.1-1' }} F</td>
+                <td>{{ item.humidity }} %</td>
+                <td>{{ item.light }}</td>
+                <td>{{ item.passValue }}</td>
+                <td>
+                  <a
+                    class="button secondary edit-button"
+                    [routerLink]="['/readings', item.id.toString()]"
+                    [state]="{ reading: item }"
+                  >
+                    Edit
+                  </a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        }
+      </table>
+
+      @if (sensorReadingsPage.totalItems > 0) {
+        <div class="pagination">
+          <p class="pagination-summary">
+            Showing page {{ sensorReadingsPage.page + 1 }} of {{ sensorReadingsPage.totalPages }}
+            ({{ sensorReadingsPage.totalItems }} total readings)
+          </p>
+
+          <div class="pagination-actions">
+            <button
+              type="button"
+              class="button secondary"
+              (click)="goToPreviousPage(sensorReadingsPage.page)"
+              [disabled]="sensorReadingsPage.page === 0"
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              class="button secondary"
+              (click)="goToNextPage(sensorReadingsPage.page, sensorReadingsPage.totalPages)"
+              [disabled]="sensorReadingsPage.page + 1 >= sensorReadingsPage.totalPages"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="loading-card">
+      <p>Loading Sensor Readings...</p>
+    </div>
+  }
+</section>

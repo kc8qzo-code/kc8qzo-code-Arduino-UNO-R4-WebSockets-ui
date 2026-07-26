@@ -1,0 +1,54 @@
+@if (latestSensorReading | async; as latest) {
+  <section class="mobile-latest-shell">
+    <header class="mobile-header">
+      <p class="eyebrow">Live Mobile Sensor Data</p>
+      <h1>Latest Reading</h1>
+      <p>Refreshes every 2 seconds.</p>
+    </header>
+
+    @if (errorMessage) {
+      <div class="status-card error-card">
+        <p>{{ errorMessage }}</p>
+      </div>
+    }
+
+    @if (latest.reading; as reading) {
+      <div class="reading-card">
+        <div class="reading-summary">
+          <span>Sensor {{ reading.id }}</span>
+          <span>Updated {{ latest.polledAt | date:'shortTime' }}</span>
+        </div>
+
+        <article class="primary-measurement">
+          <p class="measurement-label">Temperature</p>
+          <p class="primary-value">{{ reading.temperature | number:'1.1-2' }}<span> F</span></p>
+        </article>
+
+        <div class="compact-grid">
+          <article class="measurement-card">
+            <p class="measurement-label">Humidity</p>
+            <p class="measurement-value">{{ reading.humidity | number:'1.1-2' }}<span> %</span></p>
+          </article>
+          <article class="measurement-card">
+            <p class="measurement-label">Light</p>
+            <p class="measurement-value">{{ reading.light | number:'1.0-0' }}<span> Ohms</span></p>
+          </article>
+          <article class="measurement-card full-width">
+            <p class="measurement-label">Pass Value</p>
+            <p class="measurement-value">{{ reading.passValue | number:'1.0-0' }}</p>
+          </article>
+        </div>
+      </div>
+    } @else {
+      <div class="status-card">
+        <p>No sensor readings were returned by the API.</p>
+        <p class="updated-at">Last checked {{ latest.polledAt | date:'mediumTime' }}</p>
+      </div>
+    }
+
+    <nav class="mobile-actions" aria-label="Latest sensor reading actions">
+      <a routerLink="/" class="button secondary">Home</a>
+      <a routerLink="/sensor-reading" class="button primary">Sensor Data</a>
+    </nav>
+  </section>
+}
